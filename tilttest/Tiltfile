@@ -1,0 +1,11 @@
+custom_build('nginx', ':',
+    tag="1.18",
+    deps=["."],
+    live_update=[
+        sync('testdata/', '/root'),
+        run('date >> /root/test1-start.txt', trigger=['testdata/test-1.txt']),
+	run('date >> /root/test1-end.txt', trigger=['testdata/test-255.txt']),
+    ],
+)
+
+k8s_yaml(listdir('./manifests'))
